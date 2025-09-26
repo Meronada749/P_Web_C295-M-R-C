@@ -7,6 +7,12 @@ export default class Writer extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
+  @column()
+  declare lastname: string
+
+  @column()
+  declare firstname: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
