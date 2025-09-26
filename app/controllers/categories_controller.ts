@@ -19,14 +19,24 @@ export default class CategoriesController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) { }
+  async store({ request, response }: HttpContext) {
+    // Récupération des données envoyées par le client et validation des données
+    const { label } = await request.validateUsing(categoryValidator)
+
+    // Création d'un nouvel enseignant avec les données validées
+    const category = await Category.create({ label})
+
+    // On utilise `response.created` pour retourner un code HTTP 201 avec les
+    //données de l'enseignant créé
+    return response.created(category)
+  }
 
   /**
    * Show individual record
    */
   async show({ params }: HttpContext) {
     return await Category.findOrFail(params.id)
-   }
+  }
 
   /**
    * Edit individual record
@@ -39,7 +49,7 @@ export default class CategoriesController {
   async update({ params, request }: HttpContext) {
     // Récupération des données envoyées par le client
     const { label } = await request.validateUsing(categoryValidator)
-    const data = {label}
+    const data = { label }
     // Vérification de l'existence de l'élève
     const category = await Category.findOrFail(params.id)
     // Mise à jour des données de l'élève
@@ -52,5 +62,11 @@ export default class CategoriesController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) { }
+  async destroy({ params }: HttpContext) {
+    // Vérification de l'existence de la catégorie
+    const category = await Category.findOrFail(params.id)
+
+    // Suppression de la catégorie
+    return await category.delete()
+   }
 }
