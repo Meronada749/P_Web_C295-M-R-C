@@ -1,5 +1,7 @@
 npm install
 
+.env edit
+
 TZ=UTC
 PORT=3333
 HOST=localhost
@@ -12,4 +14,23 @@ DB_USER=root
 DB_PASSWORD=root
 DB_DATABASE=db_library
 
+node ace generate:key
+
 node ace make:model -m Book
+do model and migrations
+
+create db_library
+
+(node ace migration:fresh --seed)
+
+node ace make:seeder Book
+
+node ace make:factory Book
+
+node ace make:validator Book
+
+node ace make:controller -r Book [index, store(validator), show, update(validator), destroy]
+
+start/routes --> add code
+
+(node ace list:routes) just to check list of routes
