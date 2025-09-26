@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Category from './category.js'
+import Writer from './writer.js'
 
 export default class Book extends BaseModel {
   @column({ isPrimary: true })
@@ -26,21 +29,21 @@ export default class Book extends BaseModel {
   @column()
   declare imagePath: string
 
-  // // Foreign key
-  // @column()
-  // declare categoryId: number
+  // Foreign key
+  @column()
+  declare categoryId: number
 
-  // // Foreign key
-  // @column()
-  // declare writerId: number
+  // Foreign key
+  @column()
+  declare writerId: number
 
-  // Relation : one book belongs to one category
-  // @belongsTo(() => Category)
-  // declare category: BelongsTo<typeof Category>
+  //Relation : one book belongs to one category
+  @belongsTo(() => Category)
+  declare category: BelongsTo<typeof Category>
 
-  // Relation : one book belongs to one writer
-  // @belongsTo(() => Writer)
-  // declare writer: BelongsTo<typeof Writer>
+  //Relation : one book belongs to one writer
+  @belongsTo(() => Writer)
+  declare writer: BelongsTo<typeof Writer>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

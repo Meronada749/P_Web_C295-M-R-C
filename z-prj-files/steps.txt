@@ -31,7 +31,8 @@ node ace make:factory Book
 
 node ace make:validator Book
 
-node ace make:controller -r Book [index, store(validator), show, update(validator), destroy]
+node ace make:controller -r Book 
+[index, store(validator), show, update(validator), destroy]
 
 start/routes --> add code
 
