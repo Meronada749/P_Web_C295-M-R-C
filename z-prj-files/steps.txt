@@ -19,7 +19,9 @@ node ace generate:key
 node ace make:model -m Book
 do model and migrations
 
-create db_library
+docker container exec -it mysql-container mysql -u root -proot
+create database db_library;
+use db_library;
 
 (node ace migration:fresh --seed)
 
