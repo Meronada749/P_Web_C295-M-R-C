@@ -6,9 +6,21 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.string('comment')
 
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('evaluations')
+        .onDelete('CASCADE')
+
+      table
+        .integer('book_id')
+        .unsigned()
+        .references('id')
+        .inTable('evaluations')
+        .onDelete('CASCADE')
     })
   }
 
