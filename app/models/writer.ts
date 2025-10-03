@@ -13,12 +13,12 @@ export default class Writer extends BaseModel {
   @column()
   declare firstname: string
 
+  @hasMany(() => Book)
+  declare book: HasMany<typeof Book>
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
-
-  @hasMany(() => Book)
-  declare book: HasMany<typeof Book>
 }
