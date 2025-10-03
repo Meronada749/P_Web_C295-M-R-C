@@ -1,0 +1,15 @@
+meta {
+  name: Get 1 writer
+  type: http
+  seq: 8
+}
+
+get {
+  url: http://localhost:3333/writers/6
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
