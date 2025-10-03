@@ -110,3 +110,14 @@ start/routes
 router.resource('students', StudentsController).apiOnly()
 
 (node ace list:routes) just to check list of routes
+
+
+
+//----------------------------------------------------------Roles-----------------------------------------------//
+
+npm install @adonisjs/bouncer
+node ace configure @adonisjs/bouncer
+
+user routes
+validator
+controller
