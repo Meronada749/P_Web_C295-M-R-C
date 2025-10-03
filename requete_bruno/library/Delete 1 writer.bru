@@ -1,0 +1,15 @@
+meta {
+  name: Delete 1 writer
+  type: http
+  seq: 11
+}
+
+delete {
+  url: http://localhost:3333/writers/6
+  body: json
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
