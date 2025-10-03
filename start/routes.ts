@@ -14,12 +14,6 @@ import EvaluationsController from '#controllers/evaluations_controller'
 import WritersController from '#controllers/writers_controller'
 import router from '@adonisjs/core/services/router'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
-
 router.resource('categories', CategoriesController).apiOnly()
 router.resource('books', BooksController).apiOnly()
 router.resource('writers', WritersController).apiOnly()
