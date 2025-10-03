@@ -1,0 +1,27 @@
+meta {
+  name: B-Update 1 book
+  type: http
+  seq: 10
+}
+
+put {
+  url: http://localhost:3333/books/11
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Lolita1243",
+    "numberOfPages": 150,
+    "pdfLink": "https://avalanche.com/",
+    "abstract": "Careo ",
+    "editor": "Alexander",
+    "editionYear": 2053,
+    "imagePath": "/Desktop"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

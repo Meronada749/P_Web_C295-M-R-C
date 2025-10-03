@@ -1,12 +1,12 @@
 meta {
-  name: Get 1 writer
+  name: W-Delete 1 writer
   type: http
-  seq: 8
+  seq: 15
 }
 
-get {
+delete {
   url: http://localhost:3333/writers/6
-  body: none
+  body: json
   auth: inherit
 }
 
