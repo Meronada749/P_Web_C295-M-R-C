@@ -20,10 +20,14 @@ export default class CommentsController {
     return response.created(newComment)
   }
 
+  async show({ params }: HttpContext) {
+    return await Comment.findOrFail(params.id)
+  }
+
   /**
    * Handle form submission for the edit action
    */
-   async update({ params, request }: HttpContext) {
+  async update({ params, request }: HttpContext) {
     const { comment } = await request.validateUsing(commentValidator)
     const data = { comment }
     const comments = await Comment.findOrFail(params.id)
@@ -36,7 +40,7 @@ export default class CommentsController {
    * Delete record
    */
   async destroy({ params }: HttpContext) {
-      const comment = await Comment.findOrFail(params.id)
-      return await comment.delete()
-    }
+    const comment = await Comment.findOrFail(params.id)
+    return await comment.delete()
+  }
 }
