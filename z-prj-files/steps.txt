@@ -17,6 +17,7 @@ DB_DATABASE=db_library
 node ace generate:key
 
 node ace make:model -m Book
+
 do model and migrations
 
 //----------------------------------------------------------Model-----------------------------------------------//

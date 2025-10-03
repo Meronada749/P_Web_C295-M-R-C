@@ -8,19 +8,9 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('comment')
 
-      table
-        .integer('user_id')
-        .unsigned()
-        .references('id')
-        .inTable('evaluations')
-        .onDelete('CASCADE')
+      table.integer('user_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
 
-      table
-        .integer('book_id')
-        .unsigned()
-        .references('id')
-        .inTable('evaluations')
-        .onDelete('CASCADE')
+      table.integer('book_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
     })
   }
 

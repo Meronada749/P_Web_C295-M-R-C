@@ -15,19 +15,16 @@ export default class extends BaseSchema {
       table.integer('edition_year')
       table.string('image_path')
 
-      // // Relation : 1 book → 1 category
-      // table
-      //   .integer('category_id')
-      //   .unsigned()
-      //   .references('id')
-      //   .inTable('categories')
-      //   .onDelete('CASCADE')
+      table
+        .integer('category_id')
+        .unsigned()
+        .references('id')
+        .inTable('categories')
+        .onDelete('CASCADE')
 
-      // // Relation : 1 book → 1 writer
-      // table.integer('writer_id').unsigned().references('id').inTable('writers').onDelete('CASCADE')
+      table.integer('writer_id').unsigned().references('id').inTable('writers').onDelete('CASCADE')
 
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
+      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
     })
   }
 
