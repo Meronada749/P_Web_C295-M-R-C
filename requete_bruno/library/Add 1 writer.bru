@@ -1,0 +1,22 @@
+meta {
+  name: Add 1 writer
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3333/writers
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "lastname":"Adonis",
+    "firstname":"Meron"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
