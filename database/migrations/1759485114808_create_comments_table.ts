@@ -12,14 +12,14 @@ export default class extends BaseSchema {
         .integer('user_id')
         .unsigned()
         .references('id')
-        .inTable('evaluations')
+        .inTable('comments')
         .onDelete('CASCADE')
 
       table
         .integer('book_id')
         .unsigned()
         .references('id')
-        .inTable('evaluations')
+        .inTable('comments')
         .onDelete('CASCADE')
     })
   }
