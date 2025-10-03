@@ -28,16 +28,10 @@ export default class WritersController {
     return await Writer.findOrFail(params.id)
   }
 
-
-  /**
-   * Edit individual record
-   */
-  async edit({ params }: HttpContext) { }
-
   /**
    * Handle form submission for the edit action
    */
-   async update({ params, request }: HttpContext) {
+  async update({ params, request }: HttpContext) {
     const { firstname, lastname } = await request.validateUsing(writerValidator)
     const data = { firstname, lastname }
     const writer = await Writer.findOrFail(params.id)
@@ -50,7 +44,7 @@ export default class WritersController {
    * Delete record
    */
   async destroy({ params }: HttpContext) {
-      const writer = await Writer.findOrFail(params.id)
-      return await writer.delete()
-    }
+    const writer = await Writer.findOrFail(params.id)
+    return await writer.delete()
+  }
 }
