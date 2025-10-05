@@ -61,7 +61,7 @@ do model and migrations
     //   .inTable('categories')
     //   .onDelete('CASCADE')
 
-
+//----------------------------------------------------------database-----------------------------------------------//
 docker container exec -it mysql-container mysql -u root -proot
 create database db_library;
 use db_library;
