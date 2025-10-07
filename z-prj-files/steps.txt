@@ -1,3 +1,5 @@
+npm init adonisjs@latest <project name> -- --db=mysql -K=api --auth-guard=access_tokens
+
 npm install
 
 .env edit
@@ -117,6 +119,7 @@ router.resource('students', StudentsController).apiOnly()
 
 npm install @adonisjs/bouncer
 node ace configure @adonisjs/bouncer
+node ace make:policy Comment
 
 user routes
 validator
