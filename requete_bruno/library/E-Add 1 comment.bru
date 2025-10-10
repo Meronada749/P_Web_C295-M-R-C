@@ -1,0 +1,21 @@
+meta {
+  name: E-Add 1 comment
+  type: http
+  seq: 19
+}
+
+post {
+  url: http://localhost:3333/books/1/comments
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "comment":"I hate this book."
+  }
+}
+
+settings {
+  encodeUrl: true
+}

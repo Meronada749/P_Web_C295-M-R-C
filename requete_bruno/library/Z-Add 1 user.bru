@@ -1,0 +1,21 @@
+meta {
+  name: Z-Add 1 user
+  type: http
+  seq: 26
+}
+
+post {
+  url: http://localhost:3333/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Rayan"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

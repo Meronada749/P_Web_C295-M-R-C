@@ -5,15 +5,10 @@ import Book from '#models/book'
 
 export default class CommentsController {
   async index({ params, response }: HttpContext) {
-    // solution 1
-    // const book = await Book.query().preload('comments').where('id', params.book_id).firstOrFail()
-
-    // solution 2
     const book = await Book.findOrFail(params.book_id)
     await book.load('comments', (query) => {
       query.preload('book').preload('user')
     })
-
     return response.ok(book.comments)
   }
 

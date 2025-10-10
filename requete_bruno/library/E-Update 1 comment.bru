@@ -1,0 +1,21 @@
+meta {
+  name: E-Update 1 comment
+  type: http
+  seq: 20
+}
+
+put {
+  url: http://localhost:3333/books/1/comments/6
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "comment":"I love this book."
+  }
+}
+
+settings {
+  encodeUrl: true
+}

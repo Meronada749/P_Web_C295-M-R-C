@@ -1,0 +1,21 @@
+meta {
+  name: Z-Update 1 user
+  type: http
+  seq: 27
+}
+
+put {
+  url: http://localhost:3333/users/6
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Chris"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

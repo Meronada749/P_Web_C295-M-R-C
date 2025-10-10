@@ -1,0 +1,15 @@
+meta {
+  name: Z-Get all users
+  type: http
+  seq: 24
+}
+
+get {
+  url: http://localhost:3333/users
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
