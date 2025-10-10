@@ -1,18 +1,18 @@
 meta {
-  name: Z-Add 1 user
+  name: X-Add 1 evaluation
   type: http
-  seq: 29
+  seq: 24
 }
 
 post {
-  url: http://localhost:3333/users
+  url: http://localhost:3333/books/1/evaluations
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "username": "Rayan"
+    "note": 5
   }
 }
 
