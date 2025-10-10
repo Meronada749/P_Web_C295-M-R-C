@@ -1,18 +1,18 @@
 meta {
-  name: C-Update 1 category
+  name: X-Update 1 evaluation
   type: http
-  seq: 5
+  seq: 25
 }
 
 put {
-  url: http://localhost:3333/categories/12
+  url: http://localhost:3333/books/1/evaluations/5
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "label":"Musical-Family"
+    "note": 4
   }
 }
 
