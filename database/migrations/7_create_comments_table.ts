@@ -6,10 +6,11 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('comment')
+      table.text('comment')
 
+      // Relation : 1 commentaire → 1 user
       table.integer('user_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
-
+      // Relation : 1 commentaire → 1 book
       table.integer('book_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
     })
   }

@@ -7,13 +7,15 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('note')
+
+      // Relation : 1 evaluation → 1 user
       table
         .integer('user_id')
         .unsigned()
         .references('id')
         .inTable('evaluations')
         .onDelete('CASCADE')
-
+      // Relation : 1 evaluation → 1 book
       table
         .integer('book_id')
         .unsigned()
