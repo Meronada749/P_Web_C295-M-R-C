@@ -1,18 +1,19 @@
 meta {
-  name: X-Add 1 evaluation for a specific book
+  name: A-Register
   type: http
-  seq: 27
+  seq: 2
 }
 
 post {
-  url: http://localhost:3333/books/1/evaluations
+  url: http://localhost:3333/user/register
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "note": 5
+    "username": "Meron",
+    "password": "12345678"
   }
 }
 

@@ -31,3 +31,34 @@ router
     router.resource('evaluations', EvaluationsController).apiOnly()
   })
   .prefix('books/:book_id')
+
+//   router
+//   .group(() => {
+//     router.resource('books', BooksController).apiOnly()
+//     router.resource('writers', WritersController).apiOnly()
+//     router.resource('categories', CategoriesController).apiOnly()
+//     router.resource('users', UsersController).apiOnly()
+
+//     // /books/:book_id/comments
+//     router
+//       .group(() => {
+//         router.resource('comments', CommentsController).apiOnly()
+//       })
+//       .prefix('books/:book_id')
+
+//     // /books/:book_id/evaluations
+//     router
+//       .group(() => {
+//         router.resource('evaluations', EvaluationsController).apiOnly()
+//       })
+//       .prefix('books/:book_id')
+//   })
+//   .use(middleware.auth())
+
+// router
+//   .group(() => {
+//     router.post('register', [AuthController, 'register'])
+//     router.post('login', [AuthController, 'login'])
+//     router.post('logout', [AuthController, 'logout']).use(middleware.auth())
+//   })
+//   .prefix('user')

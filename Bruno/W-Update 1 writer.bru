@@ -1,11 +1,11 @@
 meta {
   name: W-Update 1 writer
   type: http
-  seq: 15
+  seq: 18
 }
 
 put {
-  url: http://localhost:3333/writers/7
+  url: http://localhost:3333/writers/6
   body: json
   auth: inherit
 }
@@ -19,4 +19,5 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

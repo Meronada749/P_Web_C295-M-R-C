@@ -11,9 +11,9 @@ export default class extends BaseSchema {
 
       table.string('hash_password').nullable().unique()
 
-      table.date('creation_date').notNullable()
+      table.boolean('is_admin').notNullable().defaultTo(0)
 
-      table.boolean('is_admin').nullable()
+      table.timestamp('creation_date').notNullable()
     })
   }
 

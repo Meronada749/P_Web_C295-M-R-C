@@ -15,6 +15,7 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('evaluations')
         .onDelete('CASCADE')
+
       // Relation : 1 evaluation → 1 book
       table
         .integer('book_id')

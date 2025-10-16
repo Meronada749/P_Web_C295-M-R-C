@@ -24,11 +24,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare hashPassword: string
 
-  @column.dateTime({ autoCreate: true })
-  declare creationDate: DateTime
-
   @column()
   declare isAdmin: boolean
+
+  @column.dateTime({ autoCreate: true })
+  declare creationDate: DateTime
 
   // Relation: A user can have many books
   @hasMany(() => Book)

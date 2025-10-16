@@ -10,6 +10,7 @@ export default class extends BaseSchema {
 
       // Relation : 1 commentaire → 1 user
       table.integer('user_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
+
       // Relation : 1 commentaire → 1 book
       table.integer('book_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
     })

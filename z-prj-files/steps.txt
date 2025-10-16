@@ -37,3 +37,32 @@ use db_library;
 npm install @adonisjs/bouncer
 node ace configure @adonisjs/bouncer
 node ace make:policy Comment
+
+
+Model and migration of User
+
+Model and migration of Book, Comment, Evaluation 
+.unique() // Un book est lié à un seul utilisateur
+.nullable() // Permettre aux books de ne pas être liés à un utilisateur (par exemple, pour les anciens books)
+
+validator of book
+
+userId: vine.number().exists(async (db, value) => {
+const user = await db.from('users').where('id', value).first()
+// user est soit un objet (si trouvé), soit undefined (si non trouvé).
+// Explication du !!user :
+// Si user est un objet → !!user devient true
+// Si user est undefined → !!user devient false
+return !!user
+}),
+
+controller of book
+
+node ace make:validator auth
+node ace make:controller AuthController
+
+Certaines routes doivent être protéger en demandant le jeton d'authentification.
+Pour cela, on utilise le middleware d'authentification avec use(middleware.auth())
+C'est le cas des routes pour gérer Category, Book, Comment, Evaluation, Writer 
+
+controller of Comment
