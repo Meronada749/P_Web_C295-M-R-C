@@ -12,6 +12,7 @@ export default class Writer extends BaseModel {
   @column()
   declare firstname: string
 
+  // Relation: A writer can have many books
   @hasMany(() => Book)
   declare books: HasMany<typeof Book>
 }

@@ -9,6 +9,7 @@ export default class Category extends BaseModel {
   @column()
   declare label: string
 
+  // Relation: A category can have many books
   @hasMany(() => Book)
   declare books: HasMany<typeof Book>
 }

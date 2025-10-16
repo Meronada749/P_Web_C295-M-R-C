@@ -30,12 +30,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare isAdmin: boolean
 
+  // Relation: A user can have many books
   @hasMany(() => Book)
   declare books: HasMany<typeof Book>
 
+  // Relation: A user can have many comments
   @hasMany(() => Comment)
   declare comments: HasMany<typeof Comment>
 
+  // Relation: A user can have many evaluations
   @hasMany(() => Evaluation)
   declare evaluations: HasMany<typeof Evaluation>
 
