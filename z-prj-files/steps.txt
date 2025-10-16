@@ -20,11 +20,11 @@ node ace generate:key
 node ace migration:fresh --seed
 node ace list:routes
 
-node ace make:model -m Book
+node ace make:model Book -m
 node ace make:seeder Book
 node ace make:factory Book
 node ace make:validator Book
-node ace make:controller -r Book [index, store(validator), show, update(validator), destroy]
+node ace make:controller Book -r  [index, store(validator), show, update(validator), destroy]
 router.resource('students', StudentsController).apiOnly()
 
 docker container run -d --name mysql-container --restart always -e MYSQL_ROOT_PASSWORD=root -p 6033:3306 -v mysql-volume:/var/lib/mysql mysql
