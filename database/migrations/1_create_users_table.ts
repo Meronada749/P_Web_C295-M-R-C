@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 
       table.string('username').nullable().unique()
 
-      table.string('hash_password').nullable().unique()
+      table.string('password').nullable()
 
       table.boolean('is_admin').notNullable().defaultTo(0)
 

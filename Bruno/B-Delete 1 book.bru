@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: http://localhost:3333/books/6
+  url: http://localhost:3333/books/16
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }
 
 settings {

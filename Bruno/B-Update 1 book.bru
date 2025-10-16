@@ -5,16 +5,20 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/books/6
+  url: http://localhost:3333/books/3
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }
 
 body:json {
   {
-    "title": "Lolita1243",
+    "title": "Merrrron",
     "numberOfPages": 150,
-    "pdfLink": "https://avalanche.com/",
+    "pdfLink": "",
     "abstract": "Careo ",
     "editor": "Alexander",
     "editionYear": 2053,

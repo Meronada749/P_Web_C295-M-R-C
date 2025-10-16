@@ -7,7 +7,347 @@ meta {
 put {
   url: http://localhost:3333/users/6
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: {
+    "message": "insert into `users` (`creation_date`, `username`) values ('2025-10-16 18:51:26', 'Rayan') - Field 'password' doesn't have a default value",
+    "name": "Error",
+    "status": 500,
+    "frames": [
+      {
+        "file": "Error: insert into `users` (`creation_date`, `username`) values ('2025-10-16 18",
+        "filePath": "Error: insert into `users` (`creation_date`, `username`) values ('2025-10-16 18",
+        "line": 51,
+        "callee": "",
+        "calleeShort": "",
+        "column": 26,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": true
+      },
+      {
+        "file": "node_modules/mysql2/lib/packets/packet.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/packets/packet.js",
+        "line": 740,
+        "callee": "Packet.asError",
+        "calleeShort": "asError",
+        "column": 17,
+        "context": {
+          "start": 735,
+          "pre": "    if (this.buffer[this.offset] === 0x23) {\n      this.skip(1);\n      sqlState = this.readBuffer(5).toString();\n    }\n    const message = this.readString(undefined, encoding);",
+          "line": "    const err = new Error(message);",
+          "post": "    err.code = ErrorCodeToName[errorCode];\n    err.errno = errorCode;\n    err.sqlState = sqlState;\n    err.sqlMessage = message;\n    return err;"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/commands/command.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/commands/command.js",
+        "line": 29,
+        "callee": "Query.execute",
+        "calleeShort": "execute",
+        "column": 26,
+        "context": {
+          "start": 24,
+          "pre": "    if (!this.next) {\n      this.next = this.start;\n      connection._resetSequenceId();\n    }\n    if (packet && packet.isError()) {",
+          "line": "      const err = packet.asError(connection.clientEncoding);",
+          "post": "      err.sql = this.sql || this.query;\n      if (this.queryTimeout) {\n        Timers.clearTimeout(this.queryTimeout);\n        this.queryTimeout = null;\n      }"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/base/connection.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/base/connection.js",
+        "line": 475,
+        "callee": "Connection.handlePacket",
+        "calleeShort": "handlePacket",
+        "column": 34,
+        "context": {
+          "start": 470,
+          "pre": "    try {\n      if (this._fatalError) {\n        // skip remaining packets after client is in the error state\n        return;\n      }",
+          "line": "      const done = this._command.execute(packet, this);",
+          "post": "      if (done) {\n        this._command = this._commands.shift();\n        if (this._command) {\n          this.sequenceId = 0;\n          this.compressedSequenceId = 0;"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/base/connection.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/base/connection.js",
+        "line": 93,
+        "callee": "PacketParser.onPacket",
+        "calleeShort": "onPacket",
+        "column": 12,
+        "context": {
+          "start": 88,
+          "pre": "    this._outOfOrderPackets = [];\n    this.clientEncoding = CharsetToEncoding[this.config.charsetNumber];\n    this.stream.on('error', this._handleNetworkError.bind(this));\n    // see https://gist.github.com/khoomeister/4985691#use-that-instead-of-bind\n    this.packetParser = new PacketParser((p) => {",
+          "line": "      this.handlePacket(p);",
+          "post": "    });\n    this.stream.on('data', (data) => {\n      if (this.connectTimeout) {\n        Timers.clearTimeout(this.connectTimeout);\n        this.connectTimeout = null;"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/packet_parser.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/packet_parser.js",
+        "line": 75,
+        "callee": "PacketParser.executeStart",
+        "calleeShort": "executeStart",
+        "column": 16,
+        "context": {
+          "start": 70,
+          "pre": "        const sequenceId = chunk[start + 3];\n        if (\n          this.length < MAX_PACKET_LENGTH &&\n          this.largePacketParts.length === 0\n        ) {",
+          "line": "          this.onPacket(",
+          "post": "            new Packet(\n              sequenceId,\n              chunk,\n              start,\n              start + this.packetHeaderLength + this.length"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/base/connection.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/base/connection.js",
+        "line": 100,
+        "callee": "Socket.<anonymous>",
+        "calleeShort": "<anonymous>",
+        "column": 25,
+        "context": {
+          "start": 95,
+          "pre": "    this.stream.on('data', (data) => {\n      if (this.connectTimeout) {\n        Timers.clearTimeout(this.connectTimeout);\n        this.connectTimeout = null;\n      }",
+          "line": "      this.packetParser.execute(data);",
+          "post": "    });\n    this.stream.on('end', () => {\n      // emit the end event so that the pooled connection can close the connection\n      this.emit('end');\n    });"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:events",
+        "filePath": "node:events",
+        "line": 519,
+        "callee": "Socket.emit",
+        "calleeShort": "emit",
+        "column": 28,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:internal/streams/readable",
+        "filePath": "node:internal/streams/readable",
+        "line": 561,
+        "callee": "addChunk",
+        "calleeShort": "addChunk",
+        "column": 12,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:internal/streams/readable",
+        "filePath": "node:internal/streams/readable",
+        "line": 512,
+        "callee": "readableAddChunkPushByteMode",
+        "calleeShort": "readableAddChunkPushByteMode",
+        "column": 3,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:internal/streams/readable",
+        "filePath": "node:internal/streams/readable",
+        "line": 392,
+        "callee": "Readable.push",
+        "calleeShort": "push",
+        "column": 5,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      }
+    ]
+  {
+    "message": "insert into `users` (`creation_date`, `username`) values ('2025-10-16 18:51:26', 'Rayan') - Field 'password' doesn't have a default value",
+    "name": "Error",
+    "status": 500,
+    "frames": [
+      {
+        "file": "Error: insert into `users` (`creation_date`, `username`) values ('2025-10-16 18",
+        "filePath": "Error: insert into `users` (`creation_date`, `username`) values ('2025-10-16 18",
+        "line": 51,
+        "callee": "",
+        "calleeShort": "",
+        "column": 26,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": true
+      },
+      {
+        "file": "node_modules/mysql2/lib/packets/packet.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/packets/packet.js",
+        "line": 740,
+        "callee": "Packet.asError",
+        "calleeShort": "asError",
+        "column": 17,
+        "context": {
+          "start": 735,
+          "pre": "    if (this.buffer[this.offset] === 0x23) {\n      this.skip(1);\n      sqlState = this.readBuffer(5).toString();\n    }\n    const message = this.readString(undefined, encoding);",
+          "line": "    const err = new Error(message);",
+          "post": "    err.code = ErrorCodeToName[errorCode];\n    err.errno = errorCode;\n    err.sqlState = sqlState;\n    err.sqlMessage = message;\n    return err;"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/commands/command.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/commands/command.js",
+        "line": 29,
+        "callee": "Query.execute",
+        "calleeShort": "execute",
+        "column": 26,
+        "context": {
+          "start": 24,
+          "pre": "    if (!this.next) {\n      this.next = this.start;\n      connection._resetSequenceId();\n    }\n    if (packet && packet.isError()) {",
+          "line": "      const err = packet.asError(connection.clientEncoding);",
+          "post": "      err.sql = this.sql || this.query;\n      if (this.queryTimeout) {\n        Timers.clearTimeout(this.queryTimeout);\n        this.queryTimeout = null;\n      }"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/base/connection.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/base/connection.js",
+        "line": 475,
+        "callee": "Connection.handlePacket",
+        "calleeShort": "handlePacket",
+        "column": 34,
+        "context": {
+          "start": 470,
+          "pre": "    try {\n      if (this._fatalError) {\n        // skip remaining packets after client is in the error state\n        return;\n      }",
+          "line": "      const done = this._command.execute(packet, this);",
+          "post": "      if (done) {\n        this._command = this._commands.shift();\n        if (this._command) {\n          this.sequenceId = 0;\n          this.compressedSequenceId = 0;"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/base/connection.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/base/connection.js",
+        "line": 93,
+        "callee": "PacketParser.onPacket",
+        "calleeShort": "onPacket",
+        "column": 12,
+        "context": {
+          "start": 88,
+          "pre": "    this._outOfOrderPackets = [];\n    this.clientEncoding = CharsetToEncoding[this.config.charsetNumber];\n    this.stream.on('error', this._handleNetworkError.bind(this));\n    // see https://gist.github.com/khoomeister/4985691#use-that-instead-of-bind\n    this.packetParser = new PacketParser((p) => {",
+          "line": "      this.handlePacket(p);",
+          "post": "    });\n    this.stream.on('data', (data) => {\n      if (this.connectTimeout) {\n        Timers.clearTimeout(this.connectTimeout);\n        this.connectTimeout = null;"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/packet_parser.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/packet_parser.js",
+        "line": 75,
+        "callee": "PacketParser.executeStart",
+        "calleeShort": "executeStart",
+        "column": 16,
+        "context": {
+          "start": 70,
+          "pre": "        const sequenceId = chunk[start + 3];\n        if (\n          this.length < MAX_PACKET_LENGTH &&\n          this.largePacketParts.length === 0\n        ) {",
+          "line": "          this.onPacket(",
+          "post": "            new Packet(\n              sequenceId,\n              chunk,\n              start,\n              start + this.packetHeaderLength + this.length"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node_modules/mysql2/lib/base/connection.js",
+        "filePath": "C:/Users/essay/Documents/GitHub/P_Web_C295-M-R-C/node_modules/mysql2/lib/base/connection.js",
+        "line": 100,
+        "callee": "Socket.<anonymous>",
+        "calleeShort": "<anonymous>",
+        "column": 25,
+        "context": {
+          "start": 95,
+          "pre": "    this.stream.on('data', (data) => {\n      if (this.connectTimeout) {\n        Timers.clearTimeout(this.connectTimeout);\n        this.connectTimeout = null;\n      }",
+          "line": "      this.packetParser.execute(data);",
+          "post": "    });\n    this.stream.on('end', () => {\n      // emit the end event so that the pooled connection can close the connection\n      this.emit('end');\n    });"
+        },
+        "isModule": true,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:events",
+        "filePath": "node:events",
+        "line": 519,
+        "callee": "Socket.emit",
+        "calleeShort": "emit",
+        "column": 28,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:internal/streams/readable",
+        "filePath": "node:internal/streams/readable",
+        "line": 561,
+        "callee": "addChunk",
+        "calleeShort": "addChunk",
+        "column": 12,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:internal/streams/readable",
+        "filePath": "node:internal/streams/readable",
+        "line": 512,
+        "callee": "readableAddChunkPushByteMode",
+        "calleeShort": "readableAddChunkPushByteMode",
+        "column": 3,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      },
+      {
+        "file": "node:internal/streams/readable",
+        "filePath": "node:internal/streams/readable",
+        "line": 392,
+        "callee": "Readable.push",
+        "calleeShort": "push",
+        "column": 5,
+        "context": {},
+        "isModule": false,
+        "isNative": false,
+        "isApp": false
+      }
+    ]
+  {{token}}
 }
 
 body:json {

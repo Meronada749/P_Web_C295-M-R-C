@@ -19,10 +19,15 @@ export default class CommentsController {
     return response.ok(result)
   }
 
-  async store({ request, response }: HttpContext) {
-    const { comment } = await request.validateUsing(commentValidator)
-    const newComment = await Comment.create({ comment })
-    return response.created(newComment)
+  async store({ request, response, auth }: HttpContext) {
+    const data = request.only(['comment', 'bookId', 'userId'])
+    const comment = await Comment.create({
+      comment: data.comment,
+      bookId: data.bookId,
+      userId: auth.user!.id,
+    })
+
+    return response.created(comment)
   }
 
   async show({ params, response }: HttpContext) {

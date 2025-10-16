@@ -1,11 +1,11 @@
 meta {
-  name: X-Update 1 evaluation for a specific book
+  name: Z-Update 1 users
   type: http
-  seq: 28
+  seq: 33
 }
 
 put {
-  url: http://localhost:3333/books/1/evaluations/5
+  url: http://localhost:3333/users/7
   body: json
   auth: bearer
 }
@@ -16,7 +16,7 @@ auth:bearer {
 
 body:json {
   {
-    "note": 4
+    "username": "Chris"
   }
 }
 

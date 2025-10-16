@@ -11,7 +11,7 @@ import Evaluation from './evaluation.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['username'],
-  passwordColumnName: 'hashPassword',
+  passwordColumnName: 'password',
 })
 
 export default class User extends compose(BaseModel, AuthFinder) {
@@ -22,7 +22,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare username: string | null
 
   @column({ serializeAs: null })
-  declare hashPassword: string
+  declare password: string
 
   @column()
   declare isAdmin: boolean

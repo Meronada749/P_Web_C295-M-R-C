@@ -31,13 +31,13 @@ docker container run -d --name mysql-container --restart always -e MYSQL_ROOT_PA
 docker container exec -it mysql-container mysql -u root -proot
 create database db_library;
 use db_library;
+select * from users;
 
-//----------------------------------------------------------Roles-----------------------------------------------//
+UPDATE users SET role = 'admin' WHERE id = 2;
 
-npm install @adonisjs/bouncer
-node ace configure @adonisjs/bouncer
-node ace make:policy Comment
+UPDATE users SET is_admin = 1 WHERE id = 6;
 
+//----------------------------------------------------------authentification-----------------------------------------------//
 
 Model and migration of User
 
@@ -61,8 +61,14 @@ controller of book
 node ace make:validator auth
 node ace make:controller AuthController
 
-Certaines routes doivent être protéger en demandant le jeton d'authentification.
-Pour cela, on utilise le middleware d'authentification avec use(middleware.auth())
-C'est le cas des routes pour gérer Category, Book, Comment, Evaluation, Writer 
+routes .use(middleware.auth())
 
 controller of Comment
+
+//----------------------------------------------------------Roles-----------------------------------------------//
+
+npm install @adonisjs/bouncer
+node ace configure @adonisjs/bouncer
+node ace make:policy Comment
+node ace make:policy Evaluation
+node ace make:policy Book
