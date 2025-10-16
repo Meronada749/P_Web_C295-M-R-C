@@ -27,8 +27,9 @@ export default class CategoriesController {
     return category
   }
 
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const category = await Category.findOrFail(params.id)
-    return await category.delete()
+    await category.delete()
+    return response.noContent()
   }
 }

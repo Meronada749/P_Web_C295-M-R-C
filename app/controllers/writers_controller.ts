@@ -27,8 +27,9 @@ export default class WritersController {
     return writer
   }
 
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const writer = await Writer.findOrFail(params.id)
-    return await writer.delete()
+    await writer.delete()
+    return response.noContent()
   }
 }

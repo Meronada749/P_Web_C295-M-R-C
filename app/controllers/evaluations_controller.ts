@@ -33,8 +33,9 @@ export default class EvaluationsController {
     return evaluation
   }
 
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const writer = await Evaluation.findOrFail(params.id)
-    return await writer.delete()
+    await writer.delete()
+    return response.noContent()
   }
 }

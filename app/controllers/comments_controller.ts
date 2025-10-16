@@ -6,10 +6,20 @@ import Book from '#models/book'
 export default class CommentsController {
   async index({ params, response }: HttpContext) {
     const book = await Book.findOrFail(params.book_id)
+
+    // Load only comments with user
     await book.load('comments', (query) => {
-      query.preload('book').preload('user')
+      query.preload('user') // only need user, not book
     })
-    return response.ok(book.comments)
+
+    // Map the result to include only what you need
+    const result = book.comments.map((comment) => ({
+      book_title: book.title,
+      username: comment.user.username,
+      comment: comment.comment,
+    }))
+
+    return response.ok(result)
   }
 
   async store({ request, response }: HttpContext) {
@@ -19,11 +29,23 @@ export default class CommentsController {
   }
 
   async show({ params, response }: HttpContext) {
-    const book = await Comment.query()
+    // Fetch the comment with book and user preloaded
+    const comment = await Comment.query()
       .where('id', params.id)
       .where('book_id', params.book_id)
+      .preload('book') // preload the book
+      .preload('user') // preload the user
       .firstOrFail()
-    return response.ok(book)
+
+    // Return only the fields you need
+    const result = {
+      id: comment.id,
+      content: comment.comment,
+      book_title: comment.book.title,
+      username: comment.user.username,
+    }
+
+    return response.ok(result)
   }
 
   async update({ params, request }: HttpContext) {
@@ -38,8 +60,9 @@ export default class CommentsController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const comment = await Comment.findOrFail(params.id)
-    return await comment.delete()
+    await comment.delete()
+    response.noContent()
   }
 }

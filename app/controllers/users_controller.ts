@@ -27,8 +27,9 @@ export default class UsersController {
     return users
   }
 
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const users = await User.findOrFail(params.id)
-    return await users.delete()
+    await users.delete()
+    return response.noContent()
   }
 }
