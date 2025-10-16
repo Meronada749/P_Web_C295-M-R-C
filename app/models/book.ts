@@ -62,5 +62,5 @@ export default class Book extends BaseModel {
 
   // Relation : book has many evaluations
   @hasMany(() => Evaluation)
-  declare evaluation: HasMany<typeof Evaluation>
+  declare evaluations: HasMany<typeof Evaluation>
 }

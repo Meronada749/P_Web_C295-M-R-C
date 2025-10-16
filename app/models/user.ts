@@ -31,13 +31,13 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare isAdmin: boolean
 
   @hasMany(() => Book)
-  declare book: HasMany<typeof Book>
+  declare books: HasMany<typeof Book>
 
   @hasMany(() => Comment)
-  declare comment: HasMany<typeof Comment>
+  declare comments: HasMany<typeof Comment>
 
   @hasMany(() => Evaluation)
-  declare evaluation: HasMany<typeof Evaluation>
+  declare evaluations: HasMany<typeof Evaluation>
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 }

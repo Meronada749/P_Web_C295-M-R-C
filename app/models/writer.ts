@@ -13,5 +13,5 @@ export default class Writer extends BaseModel {
   declare firstname: string
 
   @hasMany(() => Book)
-  declare book: HasMany<typeof Book>
+  declare books: HasMany<typeof Book>
 }

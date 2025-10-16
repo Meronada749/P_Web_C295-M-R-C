@@ -10,5 +10,5 @@ export default class Category extends BaseModel {
   declare label: string
 
   @hasMany(() => Book)
-  declare book: HasMany<typeof Book>
+  declare books: HasMany<typeof Book>
 }
