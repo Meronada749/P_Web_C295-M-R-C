@@ -19,13 +19,15 @@ export default class UsersController {
     return response.ok(users)
   }
 
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const { username } = await request.validateUsing(userValidator)
     const data = { username }
     const users = await User.findOrFail(params.id)
+
     users.merge(data)
     await users.save()
-    return users
+
+    return response.ok(users)
   }
 
   async destroy({ params, response }: HttpContext) {

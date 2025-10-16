@@ -34,13 +34,15 @@ export default class BooksController {
     return response.ok(books)
   }
 
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const { title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath } =
       await request.validateUsing(booksValidator)
     const books = await Book.findOrFail(params.id)
+
     books.merge({ title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath })
     await books.save()
-    return books
+
+    return response.ok(books)
   }
 
   async destroy({ params, response }: HttpContext) {

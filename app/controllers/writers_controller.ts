@@ -19,13 +19,15 @@ export default class WritersController {
     return response.ok(writer)
   }
 
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const { firstname, lastname } = await request.validateUsing(writerValidator)
     const data = { firstname, lastname }
     const writer = await Writer.findOrFail(params.id)
+
     writer.merge(data)
     await writer.save()
-    return writer
+
+    return response.ok(writer)
   }
 
   async destroy({ params, response }: HttpContext) {

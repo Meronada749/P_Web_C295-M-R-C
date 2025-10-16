@@ -1,11 +1,22 @@
+import Book from '#models/book'
 import Evaluation from '#models/evaluation'
 import { evaluationValidator } from '#validators/evaluation'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class EvaluationsController {
-  async index({ response }: HttpContext) {
-    const evaluation = await Evaluation.query().preload('book').preload('user')
-    return response.ok(evaluation)
+  async index({ params, response }: HttpContext) {
+    const book = await Book.findOrFail(params.book_id)
+    await book.load('evaluations', (query) => {
+      query.preload('user')
+    })
+
+    const result = book.evaluations.map((evaluation) => ({
+      book_title: book.title,
+      username: evaluation.user.username,
+      note: evaluation.note,
+    }))
+
+    return response.ok(result)
   }
 
   async store({ request, response }: HttpContext) {
@@ -15,7 +26,6 @@ export default class EvaluationsController {
   }
 
   async show({ params, response }: HttpContext) {
-    // Fetch the evaluation with book and user preloaded
     const evaluation = await Evaluation.query()
       .where('id', params.id)
       .where('book_id', params.book_id)
@@ -23,7 +33,6 @@ export default class EvaluationsController {
       .preload('user')
       .firstOrFail()
 
-    // Return only the fields you need
     const result = {
       id: evaluation.id,
       note: evaluation.note,
@@ -34,13 +43,15 @@ export default class EvaluationsController {
     return response.ok(result)
   }
 
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const { note } = await request.validateUsing(evaluationValidator)
     const data = { note }
     const evaluation = await Evaluation.findOrFail(params.id)
+
     evaluation.merge(data)
     await evaluation.save()
-    return evaluation
+
+    return response.ok(evaluation)
   }
 
   async destroy({ params, response }: HttpContext) {
