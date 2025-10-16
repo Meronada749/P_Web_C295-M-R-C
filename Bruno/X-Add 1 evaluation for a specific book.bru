@@ -1,13 +1,19 @@
 meta {
-  name: X-Get all evaluations
+  name: X-Add 1 evaluation for a specific book
   type: http
-  seq: 22
+  seq: 24
 }
 
-get {
+post {
   url: http://localhost:3333/books/1/evaluations
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "note": 5
+  }
 }
 
 settings {
