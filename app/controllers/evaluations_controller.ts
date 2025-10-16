@@ -15,13 +15,23 @@ export default class EvaluationsController {
   }
 
   async show({ params, response }: HttpContext) {
+    // Fetch the evaluation with book and user preloaded
     const evaluation = await Evaluation.query()
+      .where('id', params.id)
+      .where('book_id', params.book_id)
       .preload('book')
       .preload('user')
-      .where('id', params.id)
       .firstOrFail()
 
-    return response.ok(evaluation)
+    // Return only the fields you need
+    const result = {
+      id: evaluation.id,
+      note: evaluation.note,
+      book_title: evaluation.book.title,
+      username: evaluation.user.username,
+    }
+
+    return response.ok(result)
   }
 
   async update({ params, request }: HttpContext) {

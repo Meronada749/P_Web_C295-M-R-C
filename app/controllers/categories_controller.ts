@@ -14,8 +14,9 @@ export default class CategoriesController {
     return response.created(category)
   }
 
-  async show({ params }: HttpContext) {
-    return await Category.findOrFail(params.id)
+  async show({ params, response }: HttpContext) {
+    const category = await Category.findOrFail(params.id)
+    return response.ok(category)
   }
 
   async update({ params, request }: HttpContext) {

@@ -14,8 +14,9 @@ export default class WritersController {
     return response.created(category)
   }
 
-  async show({ params }: HttpContext) {
-    return await Writer.findOrFail(params.id)
+  async show({ params, response }: HttpContext) {
+    const writer = await Writer.findOrFail(params.id)
+    return response.ok(writer)
   }
 
   async update({ params, request }: HttpContext) {

@@ -14,8 +14,9 @@ export default class UsersController {
     return response.created(users)
   }
 
-  async show({ params }: HttpContext) {
-    return await User.findOrFail(params.id)
+  async show({ params, response }: HttpContext) {
+    const users = await User.findOrFail(params.id)
+    return response.ok(users)
   }
 
   async update({ params, request }: HttpContext) {

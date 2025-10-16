@@ -33,14 +33,14 @@ export default class CommentsController {
     const comment = await Comment.query()
       .where('id', params.id)
       .where('book_id', params.book_id)
-      .preload('book') // preload the book
-      .preload('user') // preload the user
+      .preload('book')
+      .preload('user')
       .firstOrFail()
 
     // Return only the fields you need
     const result = {
       id: comment.id,
-      content: comment.comment,
+      comment: comment.comment,
       book_title: comment.book.title,
       username: comment.user.username,
     }
