@@ -72,3 +72,61 @@ node ace configure @adonisjs/bouncer
 node ace make:policy Comment
 node ace make:policy Evaluation
 node ace make:policy Book
+
+//---------------------------------------------------------------------------------------------------------------------------------------------//
+
+index = return Teacher.all()
+show = return Teacher.findOrFail(params.id)
+store = return Teacher.create(request.all())
+update = return (await Teacher.findOrFail(params.id)).merge(request.all()).save()
+destroy = return (await Teacher.findOrFail(params.id)).delete()
+
+{{token}}
+
+
+  async index({ response }: HttpContext) {
+
+    const teachers = await Teacher.query().orderBy('lastname').orderBy('firstname').preload('section')
+    return response.ok(teachers)
+
+    // return Teacher.all()
+  }
+
+  async store({ request, response }: HttpContext) {
+
+    const data = await request.validateUsing(teacherValidator)
+    const teachers = await Teacher.create(data)
+    return response.created(teachers)
+
+    // const data = request.all()
+    // return Teacher.create(data)
+  }
+
+  async show({ params, response }: HttpContext) {
+
+    const teachers = await Teacher.query().preload('section').where('id', params.id).firstOrFail()
+    return response.ok(teachers)
+
+    //return Teacher.findOrFail(params.id)
+  }
+
+  async update({ params, request, response }: HttpContext) {
+
+    const data = await request.validateUsing(teacherValidator)
+    const teachers = await Teacher.findOrFail(params.id)
+
+    teachers.merge(data)
+    await teachers.save()
+    return response.ok(teachers)
+
+    //return (await Teacher.findOrFail(params.id)).merge(request.all()).save()
+  }
+
+  async destroy({ params, response }: HttpContext) {
+
+    const teachers = await Teacher.findOrFail(params.id)
+    await teachers.delete()
+    return response.noContent()
+
+    // return (await Teacher.findOrFail(params.id)).delete()
+  }
