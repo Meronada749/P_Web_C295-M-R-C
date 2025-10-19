@@ -4,13 +4,13 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class UsersController {
   async index({ response }: HttpContext) {
-    const users = await User.query()
+    const users = await User.all()
     return response.ok(users)
   }
 
   async store({ request, response }: HttpContext) {
-    const { username } = await request.validateUsing(userValidator)
-    const users = await User.create({ username })
+    const data = await request.validateUsing(userValidator)
+    const users = await User.create(data)
     return response.created(users)
   }
 
@@ -20,8 +20,7 @@ export default class UsersController {
   }
 
   async update({ params, request, response }: HttpContext) {
-    const { username } = await request.validateUsing(userValidator)
-    const data = { username }
+    const data = await request.validateUsing(userValidator)
     const users = await User.findOrFail(params.id)
 
     users.merge(data)

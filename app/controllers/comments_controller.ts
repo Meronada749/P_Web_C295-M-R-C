@@ -49,8 +49,7 @@ export default class CommentsController {
   }
 
   async update({ params, request, response }: HttpContext) {
-    const { comment } = await request.validateUsing(commentValidator)
-    const data = { comment }
+    const data = await request.validateUsing(commentValidator)
     const comments = await Comment.findOrFail(params.id)
 
     comments.merge(data)

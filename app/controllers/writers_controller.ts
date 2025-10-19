@@ -4,7 +4,7 @@ import { writerValidator } from '#validators/writer'
 
 export default class WritersController {
   async index({ response }: HttpContext) {
-    const writer = await Writer.query()
+    const writer = await Writer.all()
     return response.ok(writer)
   }
 

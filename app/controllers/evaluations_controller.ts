@@ -20,8 +20,8 @@ export default class EvaluationsController {
   }
 
   async store({ request, response }: HttpContext) {
-    const { note } = await request.validateUsing(evaluationValidator)
-    const evaluation = await Evaluation.create({ note })
+    const data = await request.validateUsing(evaluationValidator)
+    const evaluation = await Evaluation.create(data)
     return response.created(evaluation)
   }
 
@@ -44,8 +44,7 @@ export default class EvaluationsController {
   }
 
   async update({ params, request, response }: HttpContext) {
-    const { note } = await request.validateUsing(evaluationValidator)
-    const data = { note }
+    const data = await request.validateUsing(evaluationValidator)
     const evaluation = await Evaluation.findOrFail(params.id)
 
     evaluation.merge(data)

@@ -4,13 +4,13 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class CategoriesController {
   async index({ response }: HttpContext) {
-    const category = await Category.query()
+    const category = await Category.all()
     return response.ok(category)
   }
 
   async store({ request, response }: HttpContext) {
-    const { label } = await request.validateUsing(categoryValidator)
-    const category = await Category.create({ label })
+    const data = await request.validateUsing(categoryValidator)
+    const category = await Category.create(data)
     return response.created(category)
   }
 
@@ -20,8 +20,7 @@ export default class CategoriesController {
   }
 
   async update({ params, request, response }: HttpContext) {
-    const { label } = await request.validateUsing(categoryValidator)
-    const data = { label }
+    const data = await request.validateUsing(categoryValidator)
     const category = await Category.findOrFail(params.id)
 
     category.merge(data)
