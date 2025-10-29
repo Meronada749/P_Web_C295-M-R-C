@@ -1,0 +1,20 @@
+meta {
+  name: W-Get 1 writer
+  type: http
+  seq: 16
+}
+
+get {
+  url: http://localhost:3333/writers/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

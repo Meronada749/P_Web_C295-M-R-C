@@ -14,20 +14,37 @@ import EvaluationsController from '#controllers/evaluations_controller'
 import UsersController from '#controllers/users_controller'
 import WritersController from '#controllers/writers_controller'
 import router from '@adonisjs/core/services/router'
-
-router.resource('books', BooksController).apiOnly()
-router.resource('writers', WritersController).apiOnly()
-router.resource('categories', CategoriesController).apiOnly()
-router.resource('users', UsersController).apiOnly()
+import { middleware } from './kernel.js'
+//import { middleware } from '#start/kernel' // Correct for named export
+import AuthController from '#controllers/auth_controller'
 
 router
   .group(() => {
-    router.resource('comments', CommentsController).apiOnly()
+    router.resource('books', BooksController).apiOnly()
+    router.resource('writers', WritersController).apiOnly()
+    router.resource('categories', CategoriesController).apiOnly()
+    router.resource('users', UsersController).apiOnly()
+
+    // /books/:book_id/comments
+    router
+      .group(() => {
+        router.resource('comments', CommentsController).apiOnly()
+      })
+      .prefix('books/:book_id')
+
+    // /books/:book_id/evaluations
+    router
+      .group(() => {
+        router.resource('evaluations', EvaluationsController).apiOnly()
+      })
+      .prefix('books/:book_id')
   })
-  .prefix('books/:book_id')
+  .use(middleware.auth())
 
 router
   .group(() => {
-    router.resource('evaluations', EvaluationsController).apiOnly()
+    router.post('register', [AuthController, 'register'])
+    router.post('login', [AuthController, 'login'])
+    router.post('logout', [AuthController, 'logout']).use(middleware.auth())
   })
-  .prefix('books/:book_id')
+  .prefix('user')

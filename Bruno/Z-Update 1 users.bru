@@ -1,0 +1,26 @@
+meta {
+  name: Z-Update 1 users
+  type: http
+  seq: 33
+}
+
+put {
+  url: http://localhost:3333/users/7
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "username": "Chris"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

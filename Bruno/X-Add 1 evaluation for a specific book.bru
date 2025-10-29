@@ -1,0 +1,26 @@
+meta {
+  name: X-Add 1 evaluation for a specific book
+  type: http
+  seq: 27
+}
+
+post {
+  url: http://localhost:3333/books/1/evaluations
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "note": 5
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,32 @@
+meta {
+  name: B-Add 1 book
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:3333/books
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Lo12t2e7",
+    "numberOfPages": 150,
+    "pdfLink": "https://aav5allandetchee.coomm/",
+    "abstract": "Careo ",
+    "editor": "Alexander",
+    "editionYear": 2053,
+    "imagePath": "/Desktop"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

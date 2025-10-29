@@ -1,0 +1,20 @@
+meta {
+  name: X-Delete 1 evaluation for a specific book
+  type: http
+  seq: 29
+}
+
+delete {
+  url: http://localhost:3333/books/1/evaluations/5
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

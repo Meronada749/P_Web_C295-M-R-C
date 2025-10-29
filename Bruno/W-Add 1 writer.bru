@@ -1,0 +1,27 @@
+meta {
+  name: W-Add 1 writer
+  type: http
+  seq: 17
+}
+
+post {
+  url: http://localhost:3333/writers
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "lastname":"Adonis",
+    "firstname":"Meron"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

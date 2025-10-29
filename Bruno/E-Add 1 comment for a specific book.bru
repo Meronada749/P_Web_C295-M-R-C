@@ -1,0 +1,26 @@
+meta {
+  name: E-Add 1 comment for a specific book
+  type: http
+  seq: 22
+}
+
+post {
+  url: http://localhost:3333/books/1/comments
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "comment":"I hate this book."
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

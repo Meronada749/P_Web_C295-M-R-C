@@ -1,0 +1,23 @@
+meta {
+  name: A-Register
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3333/user/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Admin",
+    "password": "12345678"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,20 @@
+meta {
+  name: X-Get all evaluations of a book
+  type: http
+  seq: 25
+}
+
+get {
+  url: http://localhost:3333/books/1/evaluations
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

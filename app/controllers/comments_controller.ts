@@ -7,39 +7,60 @@ export default class CommentsController {
   async index({ params, response }: HttpContext) {
     const book = await Book.findOrFail(params.book_id)
     await book.load('comments', (query) => {
-      query.preload('book').preload('user')
+      query.preload('user')
     })
-    return response.ok(book.comments)
+
+    const result = book.comments.map((comment) => ({
+      book_title: book.title,
+      username: comment.user.username,
+      comment: comment.comment,
+    }))
+
+    return response.ok(result)
   }
 
-  async store({ request, response }: HttpContext) {
-    const { comment } = await request.validateUsing(commentValidator)
-    const newComment = await Comment.create({ comment })
-    return response.created(newComment)
+  async store({ request, response, auth }: HttpContext) {
+    const data = request.only(['comment', 'bookId', 'userId'])
+    const comment = await Comment.create({
+      comment: data.comment,
+      bookId: data.bookId,
+      userId: auth.user!.id,
+    })
+
+    return response.created(comment)
   }
 
   async show({ params, response }: HttpContext) {
-    const book = await Comment.query()
+    const comment = await Comment.query()
       .where('id', params.id)
       .where('book_id', params.book_id)
+      .preload('book')
+      .preload('user')
       .firstOrFail()
-    return response.ok(book)
+
+    const result = {
+      id: comment.id,
+      comment: comment.comment,
+      book_title: comment.book.title,
+      username: comment.user.username,
+    }
+
+    return response.ok(result)
   }
 
-  async update({ params, request }: HttpContext) {
-    const { comment } = await request.validateUsing(commentValidator)
-    const data = { comment }
+  async update({ params, request, response }: HttpContext) {
+    const data = await request.validateUsing(commentValidator)
     const comments = await Comment.findOrFail(params.id)
+
     comments.merge(data)
     await comments.save()
-    return comments
+
+    return response.ok(comments)
   }
 
-  /**
-   * Delete record
-   */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const comment = await Comment.findOrFail(params.id)
-    return await comment.delete()
+    await comment.delete()
+    response.noContent()
   }
 }

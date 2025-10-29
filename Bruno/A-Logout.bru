@@ -1,0 +1,27 @@
+meta {
+  name: A-Logout
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3333/user/logout
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "username": "Admin",
+    "password": "12345678"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -10,18 +10,19 @@ export default class Evaluation extends BaseModel {
   @column()
   declare note: number
 
-  //fk
+  // Foreign key
   @column()
   declare userId: number
 
+  // Foreign key
   @column()
   declare bookId: number
 
-  //Relation : one book belongs to one category
+  // Relation: An evaluation belongs to a user
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
 
-  //Relation : one book belongs to one writer
+  // Relation: An evaluation belongs to a book
   @belongsTo(() => Book)
   declare book: BelongsTo<typeof Book>
 }

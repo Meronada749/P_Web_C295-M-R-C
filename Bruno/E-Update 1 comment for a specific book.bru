@@ -1,0 +1,26 @@
+meta {
+  name: E-Update 1 comment for a specific book
+  type: http
+  seq: 23
+}
+
+put {
+  url: http://localhost:3333/books/1/comments/6
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "comment":"I love this book."
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

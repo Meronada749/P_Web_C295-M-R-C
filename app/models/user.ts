@@ -11,7 +11,7 @@ import Evaluation from './evaluation.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['username'],
-  passwordColumnName: 'hashPassword',
+  passwordColumnName: 'password',
 })
 
 export default class User extends compose(BaseModel, AuthFinder) {
@@ -22,22 +22,25 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare username: string | null
 
   @column({ serializeAs: null })
-  declare hashPassword: string
-
-  @column.dateTime({ autoCreate: true })
-  declare creationDate: DateTime
+  declare password: string
 
   @column()
   declare isAdmin: boolean
 
+  @column.dateTime({ autoCreate: true })
+  declare creationDate: DateTime
+
+  // Relation: A user can have many books
   @hasMany(() => Book)
-  declare book: HasMany<typeof Book>
+  declare books: HasMany<typeof Book>
 
+  // Relation: A user can have many comments
   @hasMany(() => Comment)
-  declare comment: HasMany<typeof Comment>
+  declare comments: HasMany<typeof Comment>
 
+  // Relation: A user can have many evaluations
   @hasMany(() => Evaluation)
-  declare evaluation: HasMany<typeof Evaluation>
+  declare evaluations: HasMany<typeof Evaluation>
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 }

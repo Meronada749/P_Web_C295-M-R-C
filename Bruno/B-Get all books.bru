@@ -1,0 +1,20 @@
+meta {
+  name: B-Get all books
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:3333/books
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

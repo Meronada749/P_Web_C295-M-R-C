@@ -1,0 +1,26 @@
+meta {
+  name: Z-Add 1 user
+  type: http
+  seq: 32
+}
+
+post {
+  url: http://localhost:3333/users
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "username": "Rayan"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

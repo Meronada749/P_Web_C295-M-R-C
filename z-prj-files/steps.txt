@@ -17,111 +17,116 @@ DB_PASSWORD=root
 DB_DATABASE=db_library
 
 node ace generate:key
+node ace migration:fresh --seed
+node ace list:routes
 
-node ace make:model -m Book
+node ace make:model Book -m
+node ace make:seeder Book
+node ace make:factory Book
+node ace make:validator Book
+node ace make:controller Book -r  [index, store(validator), show, update(validator), destroy]
+router.resource('students', StudentsController).apiOnly()
 
-do model and migrations
-
-//----------------------------------------------------------Model-----------------------------------------------//
-  @column()
-  declare title: string
-
-  @column()
-  declare numberOfPages: number
-
-  // Foreign key
-  @column()
-  declare categoryId: number
-
-  //Relation : one book belongs to one category
-  @belongsTo(() => Category)
-  declare category: BelongsTo<typeof Category>
-
-  @hasMany(() => Book)
-  declare book: HasMany<typeof Book>
-
-  // Relation : user -> teacher
-  @hasOne(() => Teacher)
-  declare teacher: HasOne<typeof Teacher>
-
-//----------------------------------------------------------Migration-----------------------------------------------//
-    table.increments('id')
-
-    table.string('title').notNullable().unique()
-    table.integer('number_of_pages')
-    table.string('pdf_link').unique()
-    table.text('abstract')
-    table.string('editor')
-    table.integer('edition_year')
-    table.string('image_path')
-
-    // Relation : 1 book → 1 category
-    // table
-    //   .integer('category_id')
-    //   .unsigned()
-    //   .references('id')
-    //   .inTable('categories')
-    //   .onDelete('CASCADE')
-
-//----------------------------------------------------------database-----------------------------------------------//
 docker container run -d --name mysql-container --restart always -e MYSQL_ROOT_PASSWORD=root -p 6033:3306 -v mysql-volume:/var/lib/mysql mysql
 docker container exec -it mysql-container mysql -u root -proot
 create database db_library;
 use db_library;
+select * from users;
 
-(node ace migration:fresh --seed)
+UPDATE users SET role = 'admin' WHERE id = 2;
 
+UPDATE users SET is_admin = 1 WHERE id = 6;
 
-node ace make:seeder Book
-//----------------------------------------------------------Seeder-----------------------------------------------//
-    await TeacherFactory.createMany(10) or 
+//----------------------------------------------------------authentification-----------------------------------------------//
 
-    const teachers = await Teacher.all()
-    await ClassGroup.createMany([
-      {
-        name: 'CIN1A',
-        teacherId: teachers[0].id,
-      },
-      { name: 'CIN1B', teacherId: teachers[0].id },
-      { name: 'CIN1C', teacherId: teachers[1].id },
-      { name: 'FID1', teacherId: teachers[1].id },
-      { name: 'FID2', teacherId: teachers[2].id },
-      { name: 'CID2A', teacherId: teachers[2].id },
-      { name: 'CID2B', teacherId: teachers[3].id },
-    ])
+Model and migration of User
 
-node ace make:factory Book
-//----------------------------------------------------------Factory-----------------------------------------------//
+Model and migration of Book, Comment, Evaluation 
+.unique() // Un book est lié à un seul utilisateur
+.nullable() // Permettre aux books de ne pas être liés à un utilisateur (par exemple, pour les anciens books)
 
-    name: faker.person.lastName(),
-    firstname: faker.person.firstName(),
+validator of book
 
+userId: vine.number().exists(async (db, value) => {
+const user = await db.from('users').where('id', value).first()
+// user est soit un objet (si trouvé), soit undefined (si non trouvé).
+// Explication du !!user :
+// Si user est un objet → !!user devient true
+// Si user est undefined → !!user devient false
+return !!user
+}),
 
-node ace make:validator Book
-//----------------------------------------------------------Validator-----------------------------------------------//
-    name: vine.string().minLength(2).maxLength(255),
-    firstname: vine.string().minLength(2).maxLength(255),
+controller of book
 
+node ace make:validator auth
+node ace make:controller AuthController
 
-node ace make:controller -r Book 
-//----------------------------------------------------------Controller-----------------------------------------------//
-[index, store(validator), show, update(validator), destroy]
+routes .use(middleware.auth())
 
-
-start/routes
-//----------------------------------------------------------Routes-----------------------------------------------//
-router.resource('students', StudentsController).apiOnly()
-
-(node ace list:routes) just to check list of routes
-
-
+controller of Comment
 
 //----------------------------------------------------------Roles-----------------------------------------------//
 
 npm install @adonisjs/bouncer
 node ace configure @adonisjs/bouncer
 node ace make:policy Comment
+node ace make:policy Evaluation
+node ace make:policy Book
 
-user routes
-validator
-controller
+//---------------------------------------------------------------------------------------------------------------------------------------------//
+
+index = return Teacher.all()
+show = return Teacher.findOrFail(params.id)
+store = return Teacher.create(request.all())
+update = return (await Teacher.findOrFail(params.id)).merge(request.all()).save()
+destroy = return (await Teacher.findOrFail(params.id)).delete()
+
+{{token}}
+
+
+  async index({ response }: HttpContext) {
+
+    const teachers = await Teacher.query().orderBy('lastname').orderBy('firstname').preload('section')
+    return response.ok(teachers)
+
+    // return Teacher.all()
+  }
+
+  async store({ request, response }: HttpContext) {
+
+    const data = await request.validateUsing(teacherValidator)
+    const teachers = await Teacher.create(data)
+    return response.created(teachers)
+
+    // const data = request.all()
+    // return Teacher.create(data)
+  }
+
+  async show({ params, response }: HttpContext) {
+
+    const teachers = await Teacher.query().preload('section').where('id', params.id).firstOrFail()
+    return response.ok(teachers)
+
+    //return Teacher.findOrFail(params.id)
+  }
+
+  async update({ params, request, response }: HttpContext) {
+
+    const data = await request.validateUsing(teacherValidator)
+    const teachers = await Teacher.findOrFail(params.id)
+
+    teachers.merge(data)
+    await teachers.save()
+    return response.ok(teachers)
+
+    //return (await Teacher.findOrFail(params.id)).merge(request.all()).save()
+  }
+
+  async destroy({ params, response }: HttpContext) {
+
+    const teachers = await Teacher.findOrFail(params.id)
+    await teachers.delete()
+    return response.noContent()
+
+    // return (await Teacher.findOrFail(params.id)).delete()
+  }

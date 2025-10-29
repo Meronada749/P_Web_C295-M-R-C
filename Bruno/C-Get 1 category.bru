@@ -1,0 +1,20 @@
+meta {
+  name: C-Get 1 category
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:3333/categories/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

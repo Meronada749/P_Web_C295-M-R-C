@@ -44,23 +44,23 @@ export default class Book extends BaseModel {
   @column()
   declare userId: number
 
-  //Relation : one book belongs to one category
+  // Relation: A book belongs to one category
   @belongsTo(() => Category)
   declare category: BelongsTo<typeof Category>
 
-  //Relation : one book belongs to one writer
+  // Relation: A book belongs to one writer
   @belongsTo(() => Writer)
   declare writer: BelongsTo<typeof Writer>
 
-  //Relation : one book belongs to one user
+  // Relation: A book belongs to one user
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
 
-  // Relation : book has many comments
+  // Relation: A book can have many comments
   @hasMany(() => Comment)
   declare comments: HasMany<typeof Comment>
 
-  // Relation : book has many evaluations
+  // Relation : A book can have many evaluations
   @hasMany(() => Evaluation)
-  declare evaluation: HasMany<typeof Evaluation>
+  declare evaluations: HasMany<typeof Evaluation>
 }

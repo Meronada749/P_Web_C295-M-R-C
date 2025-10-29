@@ -4,7 +4,7 @@ import { writerValidator } from '#validators/writer'
 
 export default class WritersController {
   async index({ response }: HttpContext) {
-    const writer = await Writer.query()
+    const writer = await Writer.all()
     return response.ok(writer)
   }
 
@@ -14,21 +14,25 @@ export default class WritersController {
     return response.created(category)
   }
 
-  async show({ params }: HttpContext) {
-    return await Writer.findOrFail(params.id)
+  async show({ params, response }: HttpContext) {
+    const writer = await Writer.findOrFail(params.id)
+    return response.ok(writer)
   }
 
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const { firstname, lastname } = await request.validateUsing(writerValidator)
     const data = { firstname, lastname }
     const writer = await Writer.findOrFail(params.id)
+
     writer.merge(data)
     await writer.save()
-    return writer
+
+    return response.ok(writer)
   }
 
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const writer = await Writer.findOrFail(params.id)
-    return await writer.delete()
+    await writer.delete()
+    return response.noContent()
   }
 }

@@ -1,17 +1,20 @@
 import Book from '#models/book'
 import type { HttpContext } from '@adonisjs/core/http'
 import { booksValidator } from '#validators/book'
+//import { BookPolicy } from '#policies/book_policy'
 
 export default class BooksController {
   async index({ response }: HttpContext) {
     const books = await Book.query().preload('writer').preload('user').preload('category')
     return response.ok(books)
   }
-
-  async store({ request, response }: HttpContext) {
+  async store({ request, response, auth }: HttpContext) {
+    // Validate request
     const { title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath } =
       await request.validateUsing(booksValidator)
-    const books = await Book.create({
+
+    // Create book and assign logged-in user as owner
+    const book = await Book.create({
       title,
       numberOfPages,
       pdfLink,
@@ -19,8 +22,10 @@ export default class BooksController {
       editor,
       editionYear,
       imagePath,
+      userId: auth.user!.id, // <-- assign the logged-in user's id
     })
-    return response.created(books)
+
+    return response.created(book)
   }
 
   async show({ params, response }: HttpContext) {
@@ -34,17 +39,50 @@ export default class BooksController {
     return response.ok(books)
   }
 
-  async update({ params, request }: HttpContext) {
-    const { title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath } =
-      await request.validateUsing(booksValidator)
-    const books = await Book.findOrFail(params.id)
-    books.merge({ title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath })
-    await books.save()
-    return books
+  async update({ request, response, params, bouncer }: HttpContext) {
+    const book = await Book.findOrFail(params.id)
+
+    try {
+      // Check policy: only admin or owner can update
+      await bouncer.with('BookPolicy').authorize('update', book)
+    } catch {
+      // Return custom message instead of default "Access denied"
+      return response.forbidden({
+        message:
+          "You didn't add this book and you're not admin, so you do not have the right to modify it.",
+      })
+    }
+
+    // Update allowed fields
+    const data = request.only([
+      'title',
+      'numberOfPages',
+      'pdfLink',
+      'abstract',
+      'editor',
+      'editionYear',
+      'imagePath',
+    ])
+    book.merge(data)
+    await book.save()
+
+    return response.ok(book)
   }
 
-  async destroy({ params }: HttpContext) {
-    const books = await Book.findOrFail(params.id)
-    return await books.delete()
+  async destroy({ params, response, bouncer }: HttpContext) {
+    const book = await Book.findOrFail(params.id)
+
+    try {
+      // Check policy: only admin or owner can delete
+      await bouncer.with('BookPolicy').authorize('delete', book)
+    } catch {
+      return response.forbidden({
+        message:
+          "You didn't add this book and you're not admin, so you do not have the right to delete it.",
+      })
+    }
+
+    await book.delete()
+    return response.ok({ message: 'Book deleted successfully.' })
   }
 }

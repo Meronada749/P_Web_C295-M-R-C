@@ -1,0 +1,26 @@
+meta {
+  name: C-Update 1 category
+  type: http
+  seq: 8
+}
+
+put {
+  url: http://localhost:3333/categories/12
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "label":"Musical-Family"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

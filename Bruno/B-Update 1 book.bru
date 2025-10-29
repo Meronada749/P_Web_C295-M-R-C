@@ -1,0 +1,32 @@
+meta {
+  name: B-Update 1 book
+  type: http
+  seq: 13
+}
+
+put {
+  url: http://localhost:3333/books/3
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Merrrron",
+    "numberOfPages": 150,
+    "pdfLink": "",
+    "abstract": "Careo ",
+    "editor": "Alexander",
+    "editionYear": 2053,
+    "imagePath": "/Desktop"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
