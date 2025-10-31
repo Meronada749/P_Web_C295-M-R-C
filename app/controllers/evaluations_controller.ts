@@ -19,9 +19,21 @@ export default class EvaluationsController {
     return response.ok(result)
   }
 
-  async store({ request, response }: HttpContext) {
-    const data = await request.validateUsing(evaluationValidator)
-    const evaluation = await Evaluation.create(data)
+  // async store({ request, response }: HttpContext) {
+  //   const data = await request.validateUsing(evaluationValidator)
+  //   const evaluation = await Evaluation.create(data)
+  //   return response.created(evaluation)
+  // }
+
+  async store({ request, response, auth, params }: HttpContext) {
+    const { note } = request.only(['note'])
+
+    const evaluation = await Evaluation.create({
+      note,
+      bookId: params.book_id,
+      userId: auth.user!.id,
+    })
+
     return response.created(evaluation)
   }
 

@@ -83,6 +83,6 @@ export default class BooksController {
     }
 
     await book.delete()
-    return response.ok({ message: 'Book deleted successfully.' })
+    return response.noContent()
   }
 }
