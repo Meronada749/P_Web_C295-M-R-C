@@ -9,20 +9,10 @@ export default class extends BaseSchema {
       table.integer('note')
 
       // Relation : 1 evaluation → 1 user
-      table
-        .integer('user_id')
-        .unsigned()
-        .references('id')
-        .inTable('evaluations')
-        .onDelete('CASCADE')
+      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
 
       // Relation : 1 evaluation → 1 book
-      table
-        .integer('book_id')
-        .unsigned()
-        .references('id')
-        .inTable('evaluations')
-        .onDelete('CASCADE')
+      table.integer('book_id').unsigned().references('id').inTable('books').onDelete('CASCADE')
     })
   }
 
