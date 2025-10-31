@@ -10,7 +10,7 @@ export default class BooksController {
   }
   async store({ request, response, auth }: HttpContext) {
     // Validate request
-    const { title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath } =
+    const { title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath, categoryId, writerId } =
       await request.validateUsing(booksValidator)
 
     // Create book and assign logged-in user as owner
@@ -22,6 +22,8 @@ export default class BooksController {
       editor,
       editionYear,
       imagePath,
+      categoryId,
+      writerId,
       userId: auth.user!.id, // <-- assign the logged-in user's id
     })
 
