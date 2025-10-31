@@ -62,6 +62,8 @@ export default class BooksController {
       'editor',
       'editionYear',
       'imagePath',
+      'categoryId',
+      'writerId'
     ])
     book.merge(data)
     await book.save()

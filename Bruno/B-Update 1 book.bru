@@ -5,7 +5,7 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/books/3
+  url: http://localhost:3333/books/7
   body: json
   auth: bearer
 }
@@ -16,13 +16,15 @@ auth:bearer {
 
 body:json {
   {
-    "title": "Merrrron",
+    "title": "Game of thrones",
     "numberOfPages": 150,
     "pdfLink": "",
     "abstract": "Careo ",
     "editor": "Alexander",
     "editionYear": 2053,
-    "imagePath": "/Desktop"
+    "imagePath": "/Desktop",
+    "categoryId":3,
+    "writerId":1
   }
 }
 
