@@ -10,8 +10,17 @@ export default class BooksController {
   }
   async store({ request, response, auth }: HttpContext) {
     // Validate request
-    const { title, numberOfPages, pdfLink, abstract, editor, editionYear, imagePath, categoryId, writerId } =
-      await request.validateUsing(booksValidator)
+    const {
+      title,
+      numberOfPages,
+      pdfLink,
+      abstract,
+      editor,
+      editionYear,
+      imagePath,
+      categoryId,
+      writerId,
+    } = await request.validateUsing(booksValidator)
 
     // Create book and assign logged-in user as owner
     const book = await Book.create({
@@ -55,18 +64,9 @@ export default class BooksController {
       })
     }
 
-    // Update allowed fields
-    const data = request.only([
-      'title',
-      'numberOfPages',
-      'pdfLink',
-      'abstract',
-      'editor',
-      'editionYear',
-      'imagePath',
-      'categoryId',
-      'writerId'
-    ])
+    // Validate incoming request
+    const data = await request.validateUsing(booksValidator)
+
     book.merge(data)
     await book.save()
 

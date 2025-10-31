@@ -9,8 +9,8 @@ const booksValidator = vine.compile(
     editor: vine.string().minLength(2).maxLength(255),
     editionYear: vine.number().withoutDecimals().positive().min(4),
     imagePath: vine.string().minLength(2).maxLength(255),
-    categoryId: vine.number().withoutDecimals().positive().min(1).optional(),
-    writerId:vine.number()
+    categoryId: vine.number().withoutDecimals().positive().optional(),
+    writerId: vine.number().withoutDecimals().positive().optional(),
   })
 )
 export { booksValidator }
